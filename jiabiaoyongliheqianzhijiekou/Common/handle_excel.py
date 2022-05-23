@@ -1,19 +1,4 @@
-"""
-======================
-Author: 柠檬班-小简
-Time: 2020/6/17 20:09
-Project: py30
-Company: 湖南零檬信息技术有限公司
-======================
-"""
-"""
-excel类，你的需求是实现是什么?
-1、读取表头
-2、读取数据 - 读取表头以外的所有数据。 - 返回值：列表，成员是每一行数据
 
-初始化工作？  加载一个excel,打开一个表单。
-
-"""
 from openpyxl import load_workbook
 import json
 
@@ -26,18 +11,18 @@ class HandleExcel:
 
     def __read_titles(self):
         titles = []
-        for item in list(self.sh.rows)[0]:  # 遍历第1行当中每一列
+        for item in list(self.sh.rows)[0]:  
             titles.append(item.value)
         return titles
 
     def read_all_datas(self):
         all_datas = []
         titles = self.__read_titles()
-        for item in list(self.sh.rows)[1:]:  # 遍历数据行
+        for item in list(self.sh.rows)[1:]: 
             values = []
-            for val in item:  # 获取每一行的值
+            for val in item: 
                 values.append(val.value)
-            res = dict(zip(titles, values))  # title和每一行数据，打包成字典
+            res = dict(zip(titles, values))
             all_datas.append(res)
         return all_datas
 
