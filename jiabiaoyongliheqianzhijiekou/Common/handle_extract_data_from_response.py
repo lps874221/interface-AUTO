@@ -1,33 +1,17 @@
-"""
-======================
-Author: 柠檬班-小简
-Time: 2020/7/17 20:55
-Project: day9
-Company: 湖南零檬信息技术有限公司
-======================
-"""
+
 import jsonpath
 from ningmengban2019.day10.jiabiaoyongliheqianzhijiekou.Common.handle_data import EnvData
 from ningmengban2019.day10.jiabiaoyongliheqianzhijiekou.Common.my_logger import logger
 
 
 def extract_data_from_response(extract_exprs,response_dict):
-    """
-    根据jsonpath提取表达式，从响应结果当中，提取数据并设置为环境变量EnvData类的类属性，作为全局变量使用。
-    :param extract_exprs: 从excel当中读取出来的，提取表达式的字符串。
-    :param response_dict: http请求之后的响应结果。
-    :return:Nonoe
-    """
-    # 将提取表达式转换成字典
     extract_dict = eval(extract_exprs)
     logger.info("要从响应结果当中提取的数据集为：\n{}".format(extract_dict))
-    # 遍历字典，key作为全局变量名，value是jsonpath提取表达式。
     for key,value in extract_dict.items():
-        # 提取,遍历去提取，把每一个提取到的设置为环境变量
-        res = str(jsonpath.jsonpath(response_dict,value)[0])#jsonpath中，前一个jsonpath是字典对象，后一个Jsonpath是表达式
-        # 设置环境变量                                        #千万记住jsonpath返回的是列表
+        res = str(jsonpath.jsonpath(response_dict,value)[0])
+                                       
         logger.info("设置环境变量.key:{},value:{}".format(key,res))
-        setattr(EnvData,key,res)#setattr是三个值，第一个是对象，第二个是key，第三个是值
+        setattr(EnvData,key,res)
 
 
 if __name__ == '__main__':
@@ -36,8 +20,7 @@ if __name__ == '__main__':
                  'data': {'id': 200713, 'leave_amount': 8555405.44, 'mobile_phone': '18605671115',
                           'reg_name': '美丽可爱的小简', 'reg_time': '2020-06-29 11:52:20.0', 'type': 1,
                           'token_info': {'token_type': 'Bearer', 'expires_in': '2020-07-08 21:33:05',
-                                         'token': 'eyJhbGciOiJIUzUxMiJ9.eyJtZW1iZXJfaWQiOjIwMDcxMywiZXhwIjoxNTk0MjE1MTg1fQ.9oTx_KSOwjEg4V9Ez_P6QV-3aBk3QCCFRZk3OlTnGDElkVanMLFK_H5wgI_9xolnjBNZE9TMI7e1nSOPKWj2HA'}},
-                 'copyright': 'Copyright 柠檬班 © 2017-2020 湖南省零檬信息技术有限公司 All Rights Reserved'}
+                                         'token': 'eyJhbGciOiJIUzUxMiJ9.eyJtZW1iZXJfaWQiOjIwMDcxMywiZXhwIjoxNTk0MjE1MTg1fQ.9oTx_KSOwjEg4V9Ez_P6QV-3aBk3QCCFRZk3OlTnGDElkVanMLFK_H5wgI_9xolnjBNZE9TMI7e1nSOPKWj2HA'}}}
 
      extract_data_from_response(ss,response)
      print(EnvData.__dict__)
