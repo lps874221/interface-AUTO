@@ -13,6 +13,6 @@ runner = HTMLTestRunner(
             stream=fp,
             title='单元测试报告',
             description='单元测试报告',
-            tester="小简"
+            tester="tester"
             )
 runner.run(s)
